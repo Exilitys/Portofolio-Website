@@ -78,7 +78,7 @@ const AboutSection = () => {
   };
 
   return (
-    <section id="about" className="py-20 relative">
+    <section id="about" className="py-10 relative">
       <div className="absolute inset-0 pattern-grid opacity-20" />
 
       <div className="container mx-auto px-6 relative z-10">

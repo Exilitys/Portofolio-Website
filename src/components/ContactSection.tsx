@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Mail, MapPin, Phone, Github, Linkedin, Send } from "lucide-react";
+import cvFile from "@/assets/CV.pdf";
 
 const ContactSection = () => {
   const contactInfo = [
@@ -27,6 +28,15 @@ const ContactSection = () => {
       description: "Indonesia",
     },
   ];
+
+  const handleDownloadCV = () => {
+    const link = document.createElement("a");
+    link.href = cvFile;
+    link.download = "Jonathan_Carlo_CV.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const socialLinks = [
     {
@@ -209,11 +219,11 @@ const ContactSection = () => {
                   <Button
                     size="lg"
                     variant="outline"
+                    onClick={handleDownloadCV}
                     className="w-full border-primary text-primary hover:bg-primary/10"
                     asChild
                   >
                     <motion.a
-                      href="#"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >

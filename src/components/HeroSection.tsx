@@ -178,7 +178,7 @@ const HeroSection = () => {
               {/* Main Profile Image */}
               <motion.div
                 className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden glow-card shadow-xl"
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.5 }}
                 transition={{ duration: 0.3 }}
               >
                 <img
@@ -215,7 +215,7 @@ const HeroSection = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.8 }}
-        className="w-full flex justify-center mt-12"
+        className="w-full flex justify-center mt-24"
       >
         <div className="bg-card/80 backdrop-blur-sm border border-border rounded-lg p-6 max-w-2xl w-full mx-auto shadow-lg">
           <blockquote className="text-center">
