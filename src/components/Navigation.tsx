@@ -7,11 +7,12 @@ interface NavigationProps {
 
 const Navigation = ({ activeSection }: NavigationProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
-  
+
   const navItems = [
     { id: "home", label: "#home" },
     { id: "about", label: "#about-me" },
     { id: "projects", label: "#projects" },
+    { id: "experience", label: "#experience" },
     { id: "skills", label: "#skills" },
     { id: "contact", label: "#contacts" },
   ];
@@ -20,7 +21,7 @@ const Navigation = ({ activeSection }: NavigationProps) => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -37,8 +38,8 @@ const Navigation = ({ activeSection }: NavigationProps) => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? "bg-background/80 backdrop-blur-lg border-b border-border" 
+        isScrolled
+          ? "bg-background/80 backdrop-blur-lg border-b border-border"
           : "bg-transparent"
       }`}
     >
@@ -50,9 +51,13 @@ const Navigation = ({ activeSection }: NavigationProps) => {
             className="flex items-center space-x-2"
           >
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">JC</span>
+              <span className="text-primary-foreground font-bold text-sm">
+                JC
+              </span>
             </div>
-            <span className="font-semibold text-foreground hidden sm:block">Jonathan Carlo</span>
+            <span className="font-semibold text-foreground hidden sm:block">
+              Jonathan Carlo
+            </span>
           </motion.div>
 
           {/* Navigation Links */}

@@ -8,18 +8,18 @@ const Footer = () => {
     {
       name: "GitHub",
       icon: <Github className="h-5 w-5" />,
-      url: "https://github.com"
+      url: "https://github.com/Exilitys",
     },
     {
-      name: "LinkedIn", 
+      name: "LinkedIn",
       icon: <Linkedin className="h-5 w-5" />,
-      url: "https://linkedin.com"
+      url: "http://www.linkedin.com/in/jonathan-carlo-670b73233",
     },
     {
       name: "Email",
       icon: <Mail className="h-5 w-5" />,
-      url: "mailto:jonathancarlo20@gmail.com"
-    }
+      url: "mailto:jonathancarlo20@gmail.com",
+    },
   ];
 
   return (
@@ -35,12 +35,31 @@ const Footer = () => {
             className="flex items-center space-x-2"
           >
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">JC</span>
+              <span className="text-primary-foreground font-bold text-sm">
+                JC
+              </span>
             </div>
             <div className="text-left">
-              <div className="font-semibold text-foreground">Jonathan Carlo</div>
-              <div className="text-sm text-muted-foreground">CS Student & AI Enthusiast</div>
+              <div className="font-semibold text-foreground">
+                Jonathan Carlo
+              </div>
+              <div className="text-sm text-muted-foreground">
+                CS Student & AI Enthusiast
+              </div>
             </div>
+          </motion.div>
+
+          {/* Right Section - Copyright */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+            className="text-center md:text-right"
+          >
+            <p className="text-sm text-muted-foreground">
+              © {currentYear} Jonathan Carlo. Built with React & Tailwind CSS
+            </p>
           </motion.div>
 
           {/* Center Section - Social Links */}
@@ -66,26 +85,10 @@ const Footer = () => {
               </motion.a>
             ))}
           </motion.div>
-
-          {/* Right Section - Copyright */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            viewport={{ once: true }}
-            className="text-center md:text-right"
-          >
-            <p className="text-sm text-muted-foreground">
-              © {currentYear} Jonathan Carlo. Built with React & Tailwind CSS
-            </p>
-            <p className="text-xs text-muted-foreground mt-1">
-              Designed for internship opportunities
-            </p>
-          </motion.div>
         </div>
 
         {/* Bottom Section - Additional Info */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
@@ -93,10 +96,9 @@ const Footer = () => {
           className="border-t border-border/50 mt-8 pt-8 text-center"
         >
           <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-            Currently seeking internship opportunities in AI, Machine Learning, and Software Development. 
-            Open to collaborations and exciting projects that make a difference.
+            © {currentYear} Jonathan Carlo. Built with React & Tailwind CSS
           </p>
-        </motion.div>
+        </motion.div> */}
       </div>
     </footer>
   );

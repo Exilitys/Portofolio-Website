@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, Download } from "lucide-react";
 import jonathanPortrait from "@/assets/jonathan-portrait.jpg";
+import cvFile from "@/assets/CV.pdf";
 
 const HeroSection = () => {
   const containerVariants = {
@@ -24,6 +25,15 @@ const HeroSection = () => {
     },
   };
 
+  const handleDownloadCV = () => {
+    const link = document.createElement("a");
+    link.href = cvFile;
+    link.download = "Jonathan_Carlo_CV.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const floatingAnimation = {
     y: [-10, 10, -10],
     transition: {
@@ -34,10 +44,13 @@ const HeroSection = () => {
   };
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <section
+      id="home"
+      className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden py-24 md:py-20 mt-20"
+    >
       {/* Background Pattern */}
       <div className="absolute inset-0 pattern-dots opacity-30" />
-      
+
       {/* Floating Geometric Elements */}
       <motion.div
         animate={floatingAnimation}
@@ -54,37 +67,45 @@ const HeroSection = () => {
         transition={{ delay: 4 }}
       />
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-4 sm:px-8 relative z-10 flex flex-col">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid lg:grid-cols-2 gap-12 items-center"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full"
         >
           {/* Left Content */}
-          <div className="space-y-8">
+          <div className="space-y-8 max-w-2xl mx-auto lg:mx-0">
             <motion.div variants={itemVariants} className="space-y-4">
-              <motion.h1 
-                className="text-5xl lg:text-7xl font-bold leading-tight"
+              <motion.h1
+                className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight break-words"
                 variants={itemVariants}
               >
-                <span className="text-foreground">Jonathan Carlo is a </span>
-                <span className="text-gradient">Computer Science Student</span>
-                <span className="text-foreground"> and </span>
-                <span className="text-gradient">AI Enthusiast</span>
+                <span className="text-foreground">Hi, I'am</span>
+                <span className="text-gradient block">Jonathan Carlo</span>
+                <span className="text-foreground">
+                  {" "}
+                  Computer Science Student{" "}
+                </span>
+                <span className="text-gradient block">AI Enthusiast</span>
               </motion.h1>
-              
-              <motion.p 
+
+              <motion.p
                 variants={itemVariants}
-                className="text-xl text-muted-foreground max-w-lg leading-relaxed"
+                className="text-lg sm:text-xl text-muted-foreground max-w-lg leading-relaxed"
               >
-                Passionate about Artificial Intelligence and Broadcasting. Currently seeking internship opportunities to apply my skills in machine learning and content creation.
+                Passionate about Artificial Intelligence and Broadcasting.
+                Currently seeking internship opportunities to apply my skills in
+                machine learning and content creation.
               </motion.p>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
-              <Button 
-                size="lg" 
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-wrap gap-4"
+            >
+              <Button
+                size="lg"
                 className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg font-medium glow-primary"
                 asChild
               >
@@ -97,27 +118,27 @@ const HeroSection = () => {
                   Contact me ↗
                 </motion.a>
               </Button>
-              
-              <Button 
-                size="lg" 
-                variant="outline" 
+
+              <Button
+                size="lg"
+                variant="outline"
                 className="border-border hover:bg-secondary px-8 py-6 text-lg"
-                asChild
+                onClick={handleDownloadCV}
               >
-                <motion.a
-                  href="#"
+                <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  className="flex items-center"
                 >
                   <Download className="mr-2 h-5 w-5" />
                   Download CV
-                </motion.a>
+                </motion.div>
               </Button>
             </motion.div>
 
             <motion.div variants={itemVariants} className="flex space-x-6">
               <motion.a
-                href="https://github.com"
+                href="https://github.com/Exilitys"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1, y: -2 }}
@@ -126,7 +147,7 @@ const HeroSection = () => {
                 <Github className="h-6 w-6" />
               </motion.a>
               <motion.a
-                href="https://linkedin.com"
+                href="http://www.linkedin.com/in/jonathan-carlo-670b73233"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1, y: -2 }}
@@ -137,24 +158,26 @@ const HeroSection = () => {
             </motion.div>
 
             {/* Currently Working On Status */}
-            <motion.div 
+            <motion.div
               variants={itemVariants}
-              className="inline-flex items-center gap-3 px-4 py-2 bg-primary/10 border border-primary/20 rounded-lg"
+              className="inline-flex items-center gap-3 px-4 py-2 bg-primary/10 border border-primary/20 rounded-lg mt-2"
             >
               <div className="w-3 h-3 bg-primary rounded-full animate-pulse-glow" />
-              <span className="text-sm text-primary font-medium">Currently working on Portfolio</span>
+              <span className="text-sm text-primary font-medium">
+                Currently working on Aksara Jawa Image Recgonition
+              </span>
             </motion.div>
           </div>
 
           {/* Right Content - Profile Image with Geometric Overlay */}
-          <motion.div 
+          <motion.div
             variants={itemVariants}
-            className="relative flex justify-center lg:justify-end"
+            className="relative flex justify-center lg:justify-end mt-10 lg:mt-0"
           >
             <div className="relative">
               {/* Main Profile Image */}
               <motion.div
-                className="relative w-80 h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden glow-card"
+                className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden glow-card shadow-xl"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
@@ -192,14 +215,16 @@ const HeroSection = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.8 }}
-        className="absolute bottom-20 left-1/2 transform -translate-x-1/2"
+        className="w-full flex justify-center mt-12"
       >
-        <div className="bg-card/80 backdrop-blur-sm border border-border rounded-lg p-6 max-w-lg mx-auto">
+        <div className="bg-card/80 backdrop-blur-sm border border-border rounded-lg p-6 max-w-2xl w-full mx-auto shadow-lg">
           <blockquote className="text-center">
             <p className="text-lg text-foreground mb-4 italic">
-              "Innovation distinguishes between a leader and a follower."
+              "Intellectuals solve problems, geniuses prevent them."
             </p>
-            <cite className="text-sm text-muted-foreground">— Steve Jobs</cite>
+            <cite className="text-sm text-muted-foreground">
+              — Albert Einstein
+            </cite>
           </blockquote>
         </div>
       </motion.div>

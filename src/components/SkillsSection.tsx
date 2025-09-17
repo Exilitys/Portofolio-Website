@@ -1,52 +1,90 @@
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Users,
+  MessageSquare,
+  Lightbulb,
+  Target,
+  Puzzle,
+  Clock,
+  Heart,
+  Zap,
+  Sun,
+} from "lucide-react";
 
 const SkillsSection = () => {
   const skillCategories = [
     {
       title: "Languages",
-      skills: [
-        { name: "JavaScript", level: 90 },
-        { name: "TypeScript", level: 85 },
-        { name: "Python", level: 88 },
-        { name: "SQL", level: 82 },
-        { name: "HTML/CSS", level: 92 },
-        { name: "C", level: 75 }
-      ]
+      skills: ["JavaScript", "TypeScript", "Python", "SQL", "HTML/CSS", "C"],
     },
     {
       title: "Frameworks",
       skills: [
-        { name: "ReactJS", level: 90 },
-        { name: "NextJS", level: 85 },
-        { name: "Flask", level: 80 },
-        { name: "FastAPI", level: 78 },
-        { name: "TensorFlow", level: 75 },
-        { name: "LangGraph", level: 70 }
-      ]
+        "ReactJS",
+        "NextJS",
+        "Flask",
+        "FastAPI",
+        "TensorFlow",
+        "LangGraph",
+      ],
     },
     {
       title: "Databases & Tools",
-      skills: [
-        { name: "PostgreSQL", level: 85 },
-        { name: "Git", level: 88 },
-        { name: "Docker", level: 75 },
-        { name: "Supabase", level: 82 },
-        { name: "Vercel", level: 85 },
-        { name: "VSCode", level: 95 }
-      ]
+      skills: ["PostgreSQL", "Git", "Docker", "Supabase", "Vercel", "VSCode"],
     },
     {
-      title: "AI & Broadcasting",
-      skills: [
-        { name: "Machine Learning", level: 80 },
-        { name: "NLP", level: 78 },
-        { name: "Computer Vision", level: 75 },
-        { name: "VMIX", level: 88 },
-        { name: "OBS Studio", level: 90 },
-        { name: "Premiere Pro", level: 85 }
-      ]
-    }
+      title: "Broadcasting",
+      skills: ["VMIX", "OBS Studio", "Premiere Pro"],
+    },
+  ];
+
+  const softSkills = [
+    {
+      name: "Leadership",
+      icon: Users,
+      description: "Leading teams and projects effectively",
+    },
+    {
+      name: "Communication",
+      icon: MessageSquare,
+      description: "Clear and effective interpersonal skills",
+    },
+    {
+      name: "Problem Solving",
+      icon: Puzzle,
+      description: "Analytical thinking and solution-oriented approach",
+    },
+    {
+      name: "Critical Thinking",
+      icon: Lightbulb,
+      description: "Evaluating information and making informed decisions",
+    },
+    {
+      name: "Teamwork",
+      icon: Heart,
+      description: "Collaborative mindset and team player attitude",
+    },
+    {
+      name: "Time Management",
+      icon: Clock,
+      description: "Efficient prioritization and deadline management",
+    },
+    {
+      name: "Adaptability",
+      icon: Target,
+      description: "Flexibility in changing environments and situations",
+    },
+    {
+      name: "Fast Learner",
+      icon: Zap,
+      description: "Quick to acquire new skills and knowledge",
+    },
+    {
+      name: "Optimistic",
+      icon: Sun,
+      description: "Positive outlook and solution-focused mindset",
+    },
   ];
 
   const containerVariants = {
@@ -71,7 +109,7 @@ const SkillsSection = () => {
   return (
     <section id="skills" className="py-20 relative">
       <div className="absolute inset-0 pattern-dots opacity-20" />
-      
+
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -80,9 +118,12 @@ const SkillsSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6 hash-header">skills</h2>
+          <h2 className="text-4xl lg:text-5xl font-bold mb-6 hash-header">
+            skills
+          </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            A comprehensive overview of my technical abilities and expertise across different domains.
+            A comprehensive overview of my technical abilities and expertise
+            across different domains.
           </p>
         </motion.div>
 
@@ -97,28 +138,25 @@ const SkillsSection = () => {
             <motion.div key={category.title} variants={categoryVariants}>
               <Card className="bg-card/50 backdrop-blur-sm border-border h-full">
                 <CardContent className="p-6">
-                  <h3 className="text-2xl font-semibold mb-6 text-primary">{category.title}</h3>
-                  <div className="space-y-4">
+                  <h3 className="text-2xl font-semibold mb-6 text-primary">
+                    {category.title}
+                  </h3>
+                  <div className="flex flex-wrap gap-3">
                     {category.skills.map((skill, skillIndex) => (
-                      <div key={skill.name} className="space-y-2">
-                        <div className="flex justify-between items-center">
-                          <span className="text-foreground font-medium">{skill.name}</span>
-                          <span className="text-muted-foreground text-sm">{skill.level}%</span>
-                        </div>
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                          <motion.div
-                            className="h-full bg-gradient-to-r from-primary to-accent rounded-full"
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${skill.level}%` }}
-                            transition={{
-                              duration: 1,
-                              delay: categoryIndex * 0.2 + skillIndex * 0.1,
-                              ease: "easeOut"
-                            }}
-                            viewport={{ once: true }}
-                          />
-                        </div>
-                      </div>
+                      <motion.span
+                        key={skill}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{
+                          duration: 0.4,
+                          delay: categoryIndex * 0.1 + skillIndex * 0.05,
+                          ease: "easeOut",
+                        }}
+                        viewport={{ once: true }}
+                        className="px-4 py-2 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-full text-sm font-medium text-foreground hover:from-primary/20 hover:to-accent/20 transition-all duration-300 cursor-default"
+                      >
+                        {skill}
+                      </motion.span>
                     ))}
                   </div>
                 </CardContent>
@@ -127,26 +165,92 @@ const SkillsSection = () => {
           ))}
         </motion.div>
 
-        {/* Additional Skills Highlight */}
+        {/* Soft Skills Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="mt-16"
+        >
+          <Card className="bg-card/50 backdrop-blur-sm border-border">
+            <CardContent className="p-8">
+              <h3 className="text-2xl font-semibold mb-8 text-primary text-center">
+                Soft Skills
+              </h3>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {softSkills.map((skill, index) => {
+                  const IconComponent = skill.icon;
+                  return (
+                    <motion.div
+                      key={skill.name}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{
+                        duration: 0.5,
+                        delay: index * 0.1,
+                        ease: "easeOut",
+                      }}
+                      viewport={{ once: true }}
+                      className="group"
+                    >
+                      <div className="flex flex-col items-center text-center p-6 rounded-lg bg-gradient-to-br from-muted/30 to-muted/10 border border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-lg">
+                        <div className="w-12 h-12 mb-4 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 flex items-center justify-center group-hover:from-primary/30 group-hover:to-accent/30 transition-all duration-300">
+                          <IconComponent className="w-6 h-6 text-primary" />
+                        </div>
+                        <h4 className="text-lg font-semibold text-foreground mb-2">
+                          {skill.name}
+                        </h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {skill.description}
+                        </p>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* Language Proficiency */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
           viewport={{ once: true }}
-          className="mt-12 text-center"
+          className="mt-12"
         >
-          <Card className="bg-gradient-to-r from-primary/10 to-accent/10 border-primary/20 backdrop-blur-sm">
-            <CardContent className="p-8">
-              <h3 className="text-2xl font-semibold mb-4 text-primary">Language Proficiency</h3>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-medium">Indonesian</span>
-                  <span className="text-primary font-semibold">Native Speaker</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-medium">English</span>
-                  <span className="text-primary font-semibold">Fluent</span>
-                </div>
+          <Card className="bg-card/50 backdrop-blur-sm border-border">
+            <CardContent className="p-6">
+              <h3 className="text-2xl font-semibold mb-6 text-primary">
+                Language Proficiency
+              </h3>
+              <div className="flex flex-wrap gap-4">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, delay: 0.1 }}
+                  viewport={{ once: true }}
+                  className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-full"
+                >
+                  <span className="text-lg font-medium">🇮🇩 Indonesian</span>
+                  <span className="px-3 py-1 bg-green-500/20 text-green-700 dark:text-green-300 text-sm font-semibold rounded-full">
+                    Native
+                  </span>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, delay: 0.2 }}
+                  viewport={{ once: true }}
+                  className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border border-blue-500/20 rounded-full"
+                >
+                  <span className="text-lg font-medium">🇺🇸 English</span>
+                  <span className="px-3 py-1 bg-blue-500/20 text-blue-700 dark:text-blue-300 text-sm font-semibold rounded-full">
+                    Fluent
+                  </span>
+                </motion.div>
               </div>
             </CardContent>
           </Card>
