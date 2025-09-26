@@ -11,6 +11,7 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 // CineSpark images
 import cinesparkMain from "@/assets/cinespark/cinespark.png";
@@ -419,6 +420,33 @@ const ProjectsSection = () => {
               </Card>
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* View All Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true }}
+          className="flex justify-center mt-12"
+        >
+          <Button
+            size="lg"
+            variant="outline"
+            className="border-primary text-primary hover:bg-primary/10 px-8 py-6 text-lg group"
+            asChild
+          >
+            <Link to="/projects">
+              <motion.span
+                className="flex items-center gap-2"
+                whileHover={{ x: 5 }}
+                transition={{ duration: 0.2 }}
+              >
+                View All Projects
+                <ExternalLink className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
+              </motion.span>
+            </Link>
+          </Button>
         </motion.div>
       </div>
 

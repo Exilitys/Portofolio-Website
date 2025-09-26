@@ -27,6 +27,7 @@ const SkillsSection = () => {
         "FastAPI",
         "TensorFlow",
         "LangGraph",
+        "Streamlit",
       ],
     },
     {

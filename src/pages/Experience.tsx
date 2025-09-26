@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +9,7 @@ import {
   Award,
   Target,
   ChevronLeft,
+  X,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -64,8 +65,90 @@ import activist3 from "@/assets/Activist Technical/140536_0.jpg";
 import activist4 from "@/assets/Activist Technical/140537_0.jpg";
 import activist5 from "@/assets/Activist Technical/140538_0.jpg";
 
+// Image Modal Component
+const ImageModal = ({
+  images,
+  currentImage,
+  onClose,
+  onPrevious,
+  onNext,
+  alt,
+}: {
+  images: string[];
+  currentImage: number;
+  onClose: () => void;
+  onPrevious: () => void;
+  onNext: () => void;
+  alt: string;
+}) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.8, opacity: 0 }}
+        className="relative max-w-4xl max-h-[90vh] w-full"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
+        >
+          <X className="h-6 w-6" />
+        </button>
+
+        {/* Image */}
+        <img
+          src={images[currentImage]}
+          alt={`${alt} - Image ${currentImage + 1}`}
+          className="w-full h-full object-contain rounded-lg"
+        />
+
+        {/* Navigation */}
+        {images.length > 1 && (
+          <>
+            <button
+              onClick={onPrevious}
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-colors"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </button>
+
+            <button
+              onClick={onNext}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-colors"
+            >
+              <ChevronRight className="h-6 w-6" />
+            </button>
+
+            {/* Image counter */}
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+              {currentImage + 1} / {images.length}
+            </div>
+          </>
+        )}
+      </motion.div>
+    </motion.div>
+  );
+};
+
 // Image Slider Component
-const ImageSlider = ({ images, alt }: { images: string[]; alt: string }) => {
+const ImageSlider = ({
+  images,
+  alt,
+  onImageClick,
+}: {
+  images: string[];
+  alt: string;
+  onImageClick: (index: number) => void;
+}) => {
   const [currentImage, setCurrentImage] = useState(0);
 
   const nextImage = () => {
@@ -84,10 +167,11 @@ const ImageSlider = ({ images, alt }: { images: string[]; alt: string }) => {
         key={currentImage}
         src={images[currentImage]}
         alt={`${alt} - Image ${currentImage + 1}`}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-300"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
+        onClick={() => onImageClick(currentImage)}
       />
 
       {images.length > 1 && (
@@ -130,6 +214,40 @@ const Experience = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentExperience, setCurrentExperience] = useState<any>(null);
+
+  const openModal = (experience: any, imageIndex: number) => {
+    setCurrentExperience(experience);
+    setCurrentImageIndex(imageIndex);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setCurrentExperience(null);
+    setCurrentImageIndex(0);
+  };
+
+  const nextImage = () => {
+    if (currentExperience) {
+      setCurrentImageIndex(
+        (prev) => (prev + 1) % currentExperience.images.length
+      );
+    }
+  };
+
+  const prevImage = () => {
+    if (currentExperience) {
+      setCurrentImageIndex(
+        (prev) =>
+          (prev - 1 + currentExperience.images.length) %
+          currentExperience.images.length
+      );
+    }
+  };
 
   const experiences = [
     {
@@ -468,7 +586,7 @@ const Experience = () => {
     <div className="min-h-screen bg-background">
       <Navigation activeSection="experience" />
 
-      <main className="pt-20">
+      <main className="pt-20 max-w-4xl mx-auto">
         {/* Header Section */}
         <section className="py-20 relative">
           <div className="absolute inset-0 pattern-dots opacity-20" />
@@ -491,7 +609,7 @@ const Experience = () => {
                 </Link>
               </Button>
 
-              <h1 className="text-4xl lg:text-6xl font-bold mb-6 hash-header">
+              <h1 className="text-4xl sm:text-5xl font-bold text-primary mb-4">
                 Professional Experience
               </h1>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -510,7 +628,7 @@ const Experience = () => {
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="space-y-12"
+              className="space-y-8"
             >
               {experiences.map((experience, index) => (
                 <motion.div
@@ -520,66 +638,70 @@ const Experience = () => {
                   transition={{ duration: 0.3 }}
                 >
                   <Card className="bg-card/50 backdrop-blur-sm border-border hover:border-primary/50 transition-all duration-300 glow-card">
-                    <CardContent className="p-8 lg:p-12">
-                      <div className="space-y-8">
+                    <CardContent className="p-8">
+                      <div className="space-y-6">
                         {/* Image Slider */}
                         {experience.images && (
                           <ImageSlider
                             images={experience.images}
                             alt={experience.title}
+                            onImageClick={(index) =>
+                              openModal(experience, index)
+                            }
                           />
                         )}
 
                         {/* Header */}
-                        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-                          <div>
-                            <div className="flex items-center gap-3 mb-3">
-                              <h2 className="text-3xl font-bold text-foreground">
+                        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-2">
+                              <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
                                 {experience.title}
                               </h2>
                               <span
-                                className={`px-4 py-2 text-sm font-medium rounded-full bg-gradient-to-r ${experience.gradient} text-white`}
+                                className={`px-3 py-1 text-center text-xs font-medium rounded-full bg-gradient-to-r ${experience.gradient} text-white`}
                               >
                                 {experience.type}
                               </span>
                             </div>
-                            <p className="text-xl text-primary font-semibold mb-2">
+                            <p className="text-lg text-primary font-semibold mb-3">
                               {experience.company}
                             </p>
-                          </div>
 
-                          <div className="flex flex-col gap-3 text-muted-foreground">
-                            <div className="flex items-center gap-2">
-                              <Calendar className="h-5 w-5" />
-                              <span className="font-medium">
-                                {experience.duration}
-                              </span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <MapPin className="h-5 w-5" />
-                              <span className="font-medium">
-                                {experience.location}
-                              </span>
+                            <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground mb-4">
+                              <div className="flex items-center gap-1">
+                                <Calendar className="h-4 w-4" />
+                                <span>{experience.duration}</span>
+                              </div>
+                              <span className="text-xs">•</span>
+                              <div className="flex items-center gap-1">
+                                <MapPin className="h-4 w-4" />
+                                <span>{experience.location}</span>
+                              </div>
                             </div>
                           </div>
                         </div>
 
                         {/* Description */}
-                        <p className="text-lg text-muted-foreground leading-relaxed">
-                          {experience.description}
-                        </p>
-
-                        {/* Technologies */}
-                        <div className="space-y-3">
-                          <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                            <Target className="h-5 w-5 text-primary" />
-                            Technologies & Tools
+                        <div>
+                          <h3 className="text-lg font-semibold text-foreground mb-3">
+                            Overview
                           </h3>
-                          <div className="flex flex-wrap gap-3">
+                          <p className="text-muted-foreground leading-relaxed">
+                            {experience.description}
+                          </p>
+                        </div>
+
+                        {/* Technologies/Skills */}
+                        <div>
+                          <h3 className="text-lg font-semibold text-foreground mb-3">
+                            Skills
+                          </h3>
+                          <div className="flex flex-wrap gap-2">
                             {experience.technologies.map((tech) => (
                               <span
                                 key={tech}
-                                className="px-4 py-2 text-sm font-medium bg-secondary text-secondary-foreground rounded-full hover:bg-secondary/80 transition-colors"
+                                className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium hover:bg-primary/20 transition-colors"
                               >
                                 {tech}
                               </span>
@@ -587,48 +709,49 @@ const Experience = () => {
                           </div>
                         </div>
 
-                        {/* Key Responsibilities */}
-                        <div className="space-y-4">
-                          <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                            <ChevronRight className="h-5 w-5 text-primary" />
-                            Key Responsibilities
-                          </h3>
-                          <ul className="space-y-3">
-                            {experience.responsibilities.map(
-                              (responsibility, i) => (
-                                <li
-                                  key={i}
-                                  className="text-muted-foreground flex items-start gap-3"
-                                >
-                                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
-                                  <span className="leading-relaxed">
-                                    {responsibility}
-                                  </span>
-                                </li>
-                              )
-                            )}
-                          </ul>
-                        </div>
+                        {/* Key Highlights - Combined achievements and responsibilities */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                          <div>
+                            <h3 className="text-lg font-semibold text-foreground mb-3">
+                              Key Achievements
+                            </h3>
+                            <div className="space-y-2">
+                              {experience.achievements
+                                .slice(0, 3)
+                                .map((achievement, i) => (
+                                  <div
+                                    key={i}
+                                    className="flex items-start gap-2"
+                                  >
+                                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 flex-shrink-0"></div>
+                                    <span className="text-muted-foreground text-sm leading-relaxed">
+                                      {achievement}
+                                    </span>
+                                  </div>
+                                ))}
+                            </div>
+                          </div>
 
-                        {/* Achievements */}
-                        <div className="space-y-4">
-                          <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                            <Award className="h-5 w-5 text-primary" />
-                            Key Achievements
-                          </h3>
-                          <ul className="space-y-3">
-                            {experience.achievements.map((achievement, i) => (
-                              <li
-                                key={i}
-                                className="text-muted-foreground flex items-start gap-3"
-                              >
-                                <ChevronRight className="h-4 w-4 mt-1 text-primary flex-shrink-0" />
-                                <span className="leading-relaxed">
-                                  {achievement}
-                                </span>
-                              </li>
-                            ))}
-                          </ul>
+                          <div>
+                            <h3 className="text-lg font-semibold text-foreground mb-3">
+                              Key Responsibilities
+                            </h3>
+                            <div className="space-y-2">
+                              {experience.responsibilities
+                                .slice(0, 3)
+                                .map((responsibility, i) => (
+                                  <div
+                                    key={i}
+                                    className="flex items-start gap-2"
+                                  >
+                                    <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0"></div>
+                                    <span className="text-muted-foreground text-sm leading-relaxed">
+                                      {responsibility}
+                                    </span>
+                                  </div>
+                                ))}
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </CardContent>
@@ -636,11 +759,34 @@ const Experience = () => {
                 </motion.div>
               ))}
             </motion.div>
+
+            {/* Back to Top */}
+            <motion.div className="text-center mt-12">
+              <Button
+                variant="outline"
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                className="hover:bg-primary hover:text-primary-foreground transition-colors"
+              >
+                Back to Top
+              </Button>
+            </motion.div>
           </div>
         </section>
       </main>
 
       <Footer />
+
+      {/* Image Modal */}
+      {isModalOpen && (
+        <ImageModal
+          images={currentExperience?.images || []}
+          currentImage={currentImageIndex}
+          alt={currentExperience?.title || ""}
+          onClose={closeModal}
+          onNext={nextImage}
+          onPrevious={prevImage}
+        />
+      )}
     </div>
   );
 };
