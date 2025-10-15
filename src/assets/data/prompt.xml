@@ -99,15 +99,6 @@
     },
   ];
 
-  const handleDownloadCV = () => {
-    const link = document.createElement("a");
-    link.href = cvFile;
-    link.download = "Jonathan_Carlo_CV.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   const socialLinks = [
     {
       name: "GitHub",
