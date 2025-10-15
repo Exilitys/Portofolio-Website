@@ -1,7 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
@@ -41,10 +41,22 @@ All colors MUST be HSL.
     --radius: 0.75rem;
 
     /* Custom Design Tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(280 100% 70%), hsl(260 100% 80%));
-    --gradient-secondary: linear-gradient(135deg, hsl(220 13% 15%), hsl(220 13% 20%));
-    --gradient-accent: linear-gradient(135deg, hsl(280 100% 70% / 0.1), hsl(260 100% 80% / 0.1));
-    
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(280 100% 70%),
+      hsl(260 100% 80%)
+    );
+    --gradient-secondary: linear-gradient(
+      135deg,
+      hsl(220 13% 15%),
+      hsl(220 13% 20%)
+    );
+    --gradient-accent: linear-gradient(
+      135deg,
+      hsl(280 100% 70% / 0.1),
+      hsl(260 100% 80% / 0.1)
+    );
+
     --shadow-glow: 0 0 30px hsl(280 100% 70% / 0.3);
     --shadow-card: 0 4px 20px hsl(220 13% 5% / 0.5);
     --shadow-elevated: 0 8px 40px hsl(220 13% 5% / 0.6);
@@ -52,7 +64,6 @@ All colors MUST be HSL.
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-spring: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-
 }
 
 @layer base {
@@ -62,10 +73,21 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground font-inter antialiased;
-    background-image: 
-      radial-gradient(circle at 20% 80%, hsl(280 100% 70% / 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, hsl(260 100% 80% / 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, hsl(220 13% 15% / 0.8) 0%, transparent 50%);
+    background-image: radial-gradient(
+        circle at 20% 80%,
+        hsl(280 100% 70% / 0.05) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 80% 20%,
+        hsl(260 100% 80% / 0.05) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 40% 40%,
+        hsl(220 13% 15% / 0.8) 0%,
+        transparent 50%
+      );
     min-height: 100vh;
   }
 
@@ -77,13 +99,19 @@ All colors MUST be HSL.
 @layer components {
   /* Geometric Pattern Utilities */
   .pattern-dots {
-    background-image: radial-gradient(circle, hsl(var(--muted-foreground) / 0.15) 1px, transparent 1px);
+    background-image: radial-gradient(
+      circle,
+      hsl(var(--muted-foreground) / 0.15) 1px,
+      transparent 1px
+    );
     background-size: 20px 20px;
   }
 
   .pattern-grid {
-    background-image: 
-      linear-gradient(hsl(var(--border) / 0.3) 1px, transparent 1px),
+    background-image: linear-gradient(
+        hsl(var(--border) / 0.3) 1px,
+        transparent 1px
+      ),
       linear-gradient(90deg, hsl(var(--border) / 0.3) 1px, transparent 1px);
     background-size: 30px 30px;
   }
@@ -114,7 +142,7 @@ All colors MUST be HSL.
   }
 
   .hash-header::before {
-    content: '#';
+    content: "#";
     margin-right: 0.5rem;
     color: hsl(var(--primary));
   }
@@ -122,7 +150,7 @@ All colors MUST be HSL.
 
 @layer utilities {
   .font-inter {
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
   }
 
   .text-gradient {
@@ -135,17 +163,26 @@ All colors MUST be HSL.
   .border-gradient {
     border: 1px solid transparent;
     background: linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
-                var(--gradient-primary) border-box;
+      var(--gradient-primary) border-box;
   }
 }
 
 /* Keyframe Animations */
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes pulse-glow {
-  0% { box-shadow: 0 0 20px hsl(var(--primary) / 0.3); }
-  100% { box-shadow: 0 0 30px hsl(var(--primary) / 0.6); }
+  0% {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+  100% {
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.6);
+  }
 }
